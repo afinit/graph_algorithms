@@ -13,12 +13,9 @@ object Graph {
       .getLines.toVector
     val splitLines = lines
       .map(_.split("\t").toVector)
-    lines
-        .foreach(g => println(g.split("\t")))
-    println(splitLines.groupBy(_.head))
     val startMap = splitLines
       .groupBy(_.head)
-      .map { case (fromNode, toNodes) => fromNode -> toNodes.tail.head}
+      .map { case (fromNode, toNodes) => fromNode -> toNodes.map(_.tail.head) }
     splitLines.flatten.map {
       case node => node -> startMap.getOrElse(node, Vector.empty[String])
     }.toMap
